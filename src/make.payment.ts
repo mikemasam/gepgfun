@@ -14,7 +14,7 @@ export default async function makePayment(
     control_number,
     amount,
     currency,
-    provider: "gepgmock",
+    provider: "gepgfun",
     account_number: Math.random().toString(),
     receipt: Math.random().toString(),
   };

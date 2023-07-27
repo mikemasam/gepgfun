@@ -1,11 +1,22 @@
-# gepg-serve
+# gepgfun
+
 gepg mock/test/demo server for running tests on your local machine
 
-### gepg-serve serve
+### gepgfun serve
+
 start a http server
 
-### gepg-serve payment bill:control_number:amount:currency
+### gepgfun payment bill:control_number:amount:currency
+
 make a payment request
 
-### gepg-serve control_number bill
+### gepgfun control_number bill
+
 generate control number
+
+### .env
+
+```
+URL_CONTROL_NUMBER_CALLBACK=http://localhost/api/v1/billing/receive-control-number
+URL_PAYMENT_CALLBACK=http://localhost/api/v1/billing/receive-payment
+```

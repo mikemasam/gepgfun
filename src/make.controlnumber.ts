@@ -1,7 +1,14 @@
+import { ParsedArgs } from "minimist";
 import { BillSubmisionResponse } from "./gepg-objects";
-import { buildXml, parseXml } from "./utils";
+import { buildXml, parseXml, segfalt } from "./utils";
 
-export default async function makeControlNumber(bill_id: string) {
+export default async function makeControlNumber(
+  app$argv: ParsedArgs,
+  bill_id: string
+) {
+  const url: string =
+    app$argv.callback || (process.env.URL_CONTROL_NUMBER_CALLBACK as string);
+  if (!url) segfalt(-1, "Invalid callback url");
   const control_number = ("55" + (Math.random() + ""))
     .replace(".", "")
     .slice(0, 10);
@@ -14,7 +21,6 @@ export default async function makeControlNumber(bill_id: string) {
       "content-type": "application/xml",
     },
   };
-  const url: string = process.env.URL_CONTROL_NUMBER_CALLBACK as string;
   const [envelop, err] = await fetch(url, opts)
     .then((r) => r.text())
     .then(async (text) => {

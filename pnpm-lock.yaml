@@ -11,6 +11,9 @@ dependencies:
   express:
     specifier: ^4.18.2
     version: 4.18.2
+  minimist:
+    specifier: ^1.2.8
+    version: 1.2.8
   xml2js:
     specifier: ^0.6.0
     version: 0.6.0
@@ -19,6 +22,9 @@ devDependencies:
   '@types/express':
     specifier: ^4.17.17
     version: 4.17.17
+  '@types/minimist':
+    specifier: ^1.2.2
+    version: 1.2.2
   '@types/xml2js':
     specifier: ^0.4.11
     version: 0.4.11
@@ -66,6 +72,10 @@ packages:
 
   /@types/mime@3.0.1:
     resolution: {integrity: sha512-Y4XFY5VJAuw0FgAqPNd6NNoV44jbq9Bz2L7Rh/J6jLTiHBSBJa9fxqQIvkIld4GsoDOcCbvzOUAbLPsSKKg+uA==}
+    dev: true
+
+  /@types/minimist@1.2.2:
+    resolution: {integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==}
     dev: true
 
   /@types/node@20.4.1:
@@ -361,6 +371,10 @@ packages:
     resolution: {integrity: sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==}
     engines: {node: '>=4'}
     hasBin: true
+    dev: false
+
+  /minimist@1.2.8:
+    resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
     dev: false
 
   /ms@2.0.0:

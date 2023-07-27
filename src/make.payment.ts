@@ -1,14 +1,19 @@
 //5509710266
 
+import { ParsedArgs } from "minimist";
 import { Payment, PaymentSpInfo } from "./gepg-objects";
-import { buildXml, parseXml } from "./utils";
+import { buildXml, parseXml, segfalt } from "./utils";
 
 export default async function makePayment(
+  app$argv: ParsedArgs,
   bill_id: string,
   control_number: string,
   amount: string,
   currency: string
 ) {
+  const url: string =
+    app$argv.callback || (process.env.URL_PAYMENT_CALLBACK as string);
+  if (!url) segfalt(-1, "Invalid callback url");
   const payment: Payment = {
     bill_id,
     control_number,
@@ -27,7 +32,6 @@ export default async function makePayment(
       "content-type": "application/xml",
     },
   };
-  const url: string = process.env.URL_PAYMENT_CALLBACK as string;
   const [envelop, err] = await fetch(url, opts)
     .then((r) => r.text())
     .then(async (text) => {

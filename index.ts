@@ -1,40 +1,39 @@
+#!/usr/bin/env node
 import server from "./server";
 import makePayment from "./src/make.payment";
 import makeControlNumber from "./src/make.controlnumber";
 import dotenv from "dotenv";
+import minimist, { ParsedArgs } from "minimist";
+import { segfalt } from "./src/utils";
 dotenv.config();
-const end = (code: number, message: string) => {
-  if (code == 0) {
-    console.log(message);
-  } else {
-    console.error(message);
-  }
-  process.exit(code);
-};
-const argv = process.argv;
-const action = argv[2];
-const param = argv[3];
+
+const app$argv: ParsedArgs = minimist(process.argv.slice(2), {
+  default: {},
+});
+
+const action = app$argv._[0];
+const param = app$argv._[1];
 if (action == "serve") {
-  server();
+  server(app$argv);
 } else if (action == "payment") {
   if (!param) {
-    end(-1, "Invalid bill information bill:control_number:amount:currency");
+    segfalt(-1, "Invalid bill information bill:control_number:amount:currency");
   }
   const params: string[] = param.split(":");
   if (params.length != 4) {
-    end(-1, "Invalid bill information bill:control_number:amount:currency");
+    segfalt(-1, "Invalid bill information bill:control_number:amount:currency");
   }
 
-  makePayment(params[0], params[1], params[2], params[3]);
+  makePayment(app$argv, params[0], params[1], params[2], params[3]);
 } else if (action == "control_number") {
   if (!param) {
-    end(-1, "Invalid bill information arg - bill");
+    segfalt(-1, "Invalid bill information arg - bill");
   }
   const params: string[] = param.split(":");
   if (params.length != 1) {
-    end(-1, "Invalid bill information arg - bill");
+    segfalt(-1, "Invalid bill information arg - bill");
   }
-  makeControlNumber(params[0]);
+  makeControlNumber(app$argv, params[0]);
 } else {
   console.log(`
 Command required:\n

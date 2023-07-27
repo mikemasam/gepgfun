@@ -9,3 +9,11 @@ export async function parseXml(str: string) {
     explicitArray: false,
   });
 }
+export const segfalt = (code: number, message: string) => {
+  if (code == 0) {
+    console.log(message);
+  } else {
+    console.error(message);
+  }
+  process.exit(code);
+};

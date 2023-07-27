@@ -6,7 +6,8 @@ import {
 } from "./src/gepg-objects";
 import { buildXml, parseXml } from "./src/utils";
 import sendControlNumber from "./src/make.controlnumber";
-export default function server() {
+import { ParsedArgs } from "minimist";
+export default function server(app$argv: ParsedArgs) {
   const app: Express = express();
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
@@ -23,7 +24,7 @@ export default function server() {
       const billInfo = bill.BillTrxInf;
       //console.log(billInfo);
       setTimeout(() => {
-        sendControlNumber(billInfo.BillId);
+        sendControlNumber(app$argv, billInfo.BillId);
       }, 3000);
       const out: Res = {
         content: await buildXml(BillSubmissionRequestAck()),
@@ -43,7 +44,8 @@ export default function server() {
     })
   );
 
-  app.listen(3005, () => {
-    console.log("GePG mock App started 1");
+  const port = app$argv.port || 3005;
+  app.listen(port, () => {
+    console.log(`GePGfun App started :${port}`);
   });
 }

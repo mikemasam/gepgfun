@@ -26,7 +26,7 @@ $ gepgfun payment 1231:99324342342:1500:TZS --callback=http://localhost/api/v1/r
 
 ```
 
-### elternative .env
+### alternative .env
 
 ```
 

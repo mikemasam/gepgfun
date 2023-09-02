@@ -25,3 +25,9 @@ export const segfalt = (code: number, message: string) => {
   }
   process.exit(code);
 };
+
+export const sleep = async (time: number) => {
+  return new Promise((reslv) => {
+    setTimeout(reslv, time);
+  });
+};

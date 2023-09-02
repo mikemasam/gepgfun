@@ -38,6 +38,35 @@ export function BillCancelResponse() {
   };
 }
 
+export interface BillInfo {
+  BillId: string;
+  SubSpCode: string;
+  SpSysId: string;
+  BillAmt: string;
+  MiscAmt: string;
+  BillExprDt: string;
+  PyrId: string;
+  PyrName: string;
+  BillDesc: string;
+  BillGenDt: string;
+  BillGenBy: string;
+  BillApprBy: string;
+  PyrCellNum: string;
+  PyrEmail: string;
+  Ccy: string;
+  BillEqvAmt: string;
+  RemFlag: string;
+  BillPayOpt: string;
+  BillItems: BillItem[];
+}
+export interface BillItem {
+  BillItemRef: string;
+  UseItemRefOnPay: string;
+  BillItemAmt: string;
+  BillItemEqvAmt: string;
+  BillItemMiscAmt: string;
+  GfsCode: string;
+}
 export interface Payment {
   bill_id: string;
   control_number: string;

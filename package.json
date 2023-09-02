@@ -1,12 +1,12 @@
 {
   "name": "gepgfun",
-  "version": "0.0.116",
+  "version": "0.0.117",
   "description": " Gepg emulator, for testing gepg payment/ bill cancellation and control number generating.",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js serve",
-    "dev": "npx tsx watch index.ts serve"
+    "dev": "nodemon --exec ts-node index.ts serve"
   },
   "bin": {
     "gepgfun": "dist/index.js"

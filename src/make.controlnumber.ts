@@ -5,7 +5,7 @@ import { buildXml, parseXml, segfalt } from "./utils";
 export default async function makeControlNumber(
   app$argv: ParsedArgs,
   bill_id: string
-) {
+): Promise<string | false> {
   const url: string =
     app$argv.callback || (process.env.URL_CONTROL_NUMBER_CALLBACK as string);
   if (!url) segfalt(-1, "Invalid callback url");
@@ -34,9 +34,15 @@ export default async function makeControlNumber(
   const ack = envelop?.Gepg?.gepgBillSubRespAck;
   if (!ack) {
     console.log(err ?? `Control Number request failed`);
-    return;
+    return false;
   }
+  const bill = {
+    control_number,
+    bill_id,
+  };
   console.log(
     `Control number ${control_number} submitted with ${ack.TrxStsCode} ack`
   );
+  if (app$argv.v) console.log(bill);
+  return control_number;
 }

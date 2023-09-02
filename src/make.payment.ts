@@ -1,8 +1,7 @@
-//5509710266
-
 import { ParsedArgs } from "minimist";
 import { Payment, PaymentSpInfo } from "./gepg-objects";
 import { buildXml, parseXml, segfalt } from "./utils";
+import axios, { AxiosRequestConfig } from "axios";
 
 export default async function makePayment(
   app$argv: ParsedArgs,
@@ -25,15 +24,15 @@ export default async function makePayment(
   };
   const response = PaymentSpInfo(payment);
   const body = await buildXml(response);
-  const opts: RequestInit = {
-    method: "POST",
-    body: body,
+  const opts: AxiosRequestConfig = {
+    responseType: "text",
     headers: {
       "content-type": "application/xml",
     },
   };
-  const [envelop, err] = await fetch(url, opts)
-    .then((r) => r.text())
+  const [envelop, err] = await axios
+    .post(url, body, opts)
+    .then((r) => r.data)
     .then(async (text) => {
       return [await parseXml(text)];
     })

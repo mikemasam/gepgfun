@@ -13,6 +13,7 @@ const app$argv: ParsedArgs = minimist(process.argv.slice(2), {
 
 const action = app$argv._[0];
 const param = app$argv._[1];
+if (app$argv.autoPay != undefined) throw "autoPay is not an option.";
 if (action == "serve") {
   server(app$argv);
 } else if (action == "payment") {

@@ -4,6 +4,9 @@
 # Start a http server
 gepgfun serve
 
+# Start a http server with autopay
+gepgfun serve --autopay
+
 
 # make a payment request
 gepgfun payment bill:control_number:amount:currency

@@ -21,7 +21,7 @@ async function controlRequestEvents(app$argv: ParsedArgs, billInfo: BillInfo) {
       billInfo.BillId,
       control_number,
       billInfo.BillAmt,
-      billInfo.Ccy
+      billInfo.Ccy,
     );
   }
 }
@@ -33,6 +33,7 @@ export default function server(app$argv: ParsedArgs) {
   app.use(express.raw({ type: "application/*" }));
 
   const url: string = process.env.URL_CONTROL_NUMBER_CALLBACK as string;
+  if (!url) console.log(`URL_CONTROL_NUMBER_CALLBACK not provided`);
   if (app$argv.v) console.log(url);
   app.post(
     "/api/bill/sigqrequest",
@@ -45,7 +46,7 @@ export default function server(app$argv: ParsedArgs) {
         content: await buildXml(BillSubmissionRequestAck()),
       };
       return out;
-    })
+    }),
   );
 
   app.post(
@@ -56,7 +57,7 @@ export default function server(app$argv: ParsedArgs) {
         content: await buildXml(BillCancelResponse()),
       };
       return out;
-    })
+    }),
   );
 
   if (app$argv.autopay) console.log("^ Auto Pay enabled");

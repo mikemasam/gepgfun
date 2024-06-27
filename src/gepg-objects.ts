@@ -90,7 +90,7 @@ export function PaymentSpInfo(payment: Payment) {
           PaidAmt: payment.amount,
           BillPayOpt: 1,
           CCy: payment.currency,
-          TrxDtTm: new Date().toUTCString(),
+          TrxDtTm: new Date().toISOString().slice(0, 19),
           UsdPayChnl: "IB",
           PyrCellNum: "255711111111",
           PyrEmail: "test@mail.local",

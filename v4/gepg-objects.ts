@@ -58,6 +58,7 @@ export interface BillInfo {
   RemFlag: string;
   BillPayOpt: string;
   BillItems: BillItem[];
+  PayCntrNum: string;
 }
 export interface BillItem {
   BillItemRef: string;
@@ -67,7 +68,7 @@ export interface BillItem {
   BillItemMiscAmt: string;
   GfsCode: string;
 }
-export interface Payment {
+export interface TmpPayment {
   bill_id: string;
   control_number: string;
   amount: string;
@@ -76,7 +77,7 @@ export interface Payment {
   provider: string;
   account_number: string;
 }
-export function PaymentSpInfo(payment: Payment) {
+export function PaymentSpInfo(payment: TmpPayment) {
   return {
     Gepg: {
       gepgPmtSpInfo: {

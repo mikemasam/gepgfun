@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 import server from "./server";
-import makePayment from "./src/make.payment";
-import makeControlNumber from "./src/make.controlnumber";
+//import makePayment from "./utils/make.payment";
+//import makeControlNumber from "./utils/make.controlnumber";
 import dotenv from "dotenv";
 import minimist, { ParsedArgs } from "minimist";
-import { segfalt } from "./src/utils";
+import { segfalt } from "./lib/utils";
 dotenv.config();
 
 const app$argv: ParsedArgs = minimist(process.argv.slice(2), {
@@ -25,7 +25,7 @@ if (action == "serve") {
     segfalt(-1, "Invalid bill information bill:control_number:amount:currency");
   }
 
-  makePayment(app$argv, params[0], params[1], params[2], params[3]);
+  //makePayment(app$argv, params[0], params[1], params[2], params[3]);
 } else if (action == "control_number") {
   let _param = param + "";
   if (!_param) {
@@ -35,7 +35,7 @@ if (action == "serve") {
   if (params.length != 1) {
     segfalt(-1, "Invalid bill information arg - bill");
   }
-  makeControlNumber(app$argv, params[0]);
+  //makeControlNumber(app$argv, params[0], undefined);
 } else {
   console.log(`
 Commands:\n

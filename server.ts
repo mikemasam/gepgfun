@@ -1,30 +1,14 @@
 import express, { Express, Request, Response } from "express";
-import route, { Res } from "./src/route";
-import {
-  BillCancelResponse,
-  BillInfo,
-  BillSubmissionRequestAck,
-} from "./src/gepg-objects";
-import { buildXml, parseXml, sleep } from "./src/utils";
-import sendControlNumber from "./src/make.controlnumber";
+import route, { Res } from "./lib/route";
+import { buildXml, parseXml, sleep } from "./lib/utils";
 import { ParsedArgs } from "minimist";
-import makePayment from "./src/make.payment";
+import {
+  routeCancelControlNumber as routev4CancelControlNumber,
+  routeRequestControlNumber as routev4RequestControlNumber,
+  routeReuseControlNumber as routev4ReuseControlNumber,
+} from "./v4/routes";
+import { routev5Submission } from "./v5/routes";
 
-async function controlRequestEvents(app$argv: ParsedArgs, billInfo: BillInfo) {
-  sleep(2000);
-  const control_number = await sendControlNumber(app$argv, billInfo.BillId);
-  if (!control_number) return;
-  if (app$argv.autopay) {
-    sleep(2000);
-    await makePayment(
-      app$argv,
-      billInfo.BillId,
-      control_number,
-      billInfo.BillAmt,
-      billInfo.Ccy,
-    );
-  }
-}
 export default function server(app$argv: ParsedArgs) {
   console.log("Starting server....");
   const app: Express = express();
@@ -35,30 +19,14 @@ export default function server(app$argv: ParsedArgs) {
   const url: string = process.env.URL_CONTROL_NUMBER_CALLBACK as string;
   if (!url) console.log(`URL_CONTROL_NUMBER_CALLBACK not provided`);
   if (app$argv.v) console.log(url);
-  app.post(
-    "/api/bill/sigqrequest",
-    route(async (req: Request, res: Response) => {
-      const envelop = await parseXml(req.body.toString());
-      const bill = envelop.Gepg.gepgBillSubReq;
-      const billInfo: BillInfo = bill.BillTrxInf;
-      controlRequestEvents(app$argv, billInfo);
-      const out: Res = {
-        content: await buildXml(BillSubmissionRequestAck()),
-      };
-      return out;
-    }),
-  );
-
-  app.post(
-    "/api/bill/sigcancel_request",
-    route(async (req: Request, res: Response) => {
-      const envelop = await parseXml(req.body.toString());
-      const out: Res = {
-        content: await buildXml(BillCancelResponse()),
-      };
-      return out;
-    }),
-  );
+  app.use((req, res, next) => {
+    (req as any).app$argv = app$argv;
+    next();
+  })
+  app.post("/api/bill/sigqrequest", route(routev4RequestControlNumber));
+  app.post("/api/bill/sigqrequest_reuse", route(routev4ReuseControlNumber));
+  app.post("/api/bill/sigcancel_request", route(routev4CancelControlNumber));
+  app.post("/api/bill/20/submission", route(routev5Submission));
 
   if (app$argv.autopay) console.log("^ Auto Pay enabled");
   const port = app$argv.port || 3005;

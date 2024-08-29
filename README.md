@@ -1,4 +1,4 @@
-# gepgfun
+# gepgfun v4 & v5
 
 ```
 # Start a http server
@@ -16,6 +16,16 @@ gepgfun payment bill:control_number:amount:currency
 gepgfun control_number bill
 
 
+### configuration
+```
+
+$ Control Request Endpoint v4= http://localhost:3000/api/bill/sigqrequest 
+
+$ Control Request Endpoint v5= http://localhost:3000/api/bill/20/submission 
+
+```
+```
+$ gepgfun serve --port=3000
 ```
 
 ### arguments
@@ -23,9 +33,9 @@ gepgfun control_number bill
 ```
 $ gepgfun serve --port=3000
 
-$ gepgfun control_number 1231 --callback=http://localhost/api/v1/receive-control-number
+$ gepgfun control_number 1231 --callback=http://localhost/api/v1/receive-control-number #removed
 
-$ gepgfun payment 1231:99324342342:1500:TZS --callback=http://localhost/api/v1/receive-payment
+$ gepgfun payment 1231:99324342342:1500:TZS --callback=http://localhost/api/v1/receive-payment #removed
 
 ```
 

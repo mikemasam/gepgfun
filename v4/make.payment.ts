@@ -1,6 +1,6 @@
 import { ParsedArgs } from "minimist";
-import { Payment, PaymentSpInfo } from "./gepg-objects";
-import { buildXml, parseXml, segfalt } from "./utils";
+import { TmpPayment, PaymentSpInfo } from "./gepg-objects";
+import { buildXml, parseXml, segfalt } from "../lib/utils";
 import axios, { AxiosRequestConfig } from "axios";
 
 export default async function makePayment(
@@ -13,7 +13,7 @@ export default async function makePayment(
   const url: string =
     app$argv.callback || (process.env.URL_PAYMENT_CALLBACK as string);
   if (!url) segfalt(-1, "Invalid callback url");
-  const payment: Payment = {
+  const payment: TmpPayment = {
     bill_id,
     control_number,
     amount,

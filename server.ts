@@ -7,7 +7,7 @@ import {
   routeRequestControlNumber as routev4RequestControlNumber,
   routeReuseControlNumber as routev4ReuseControlNumber,
 } from "./v4/routes";
-import { routev5Submission } from "./v5/routes";
+import { routev5Push, routev5Submission } from "./v5/routes";
 
 export default function server(app$argv: ParsedArgs) {
   console.log("Starting server....");
@@ -27,6 +27,7 @@ export default function server(app$argv: ParsedArgs) {
   app.post("/api/bill/sigqrequest_reuse", route(routev4ReuseControlNumber));
   app.post("/api/bill/sigcancel_request", route(routev4CancelControlNumber));
   app.post("/api/bill/20/submission", route(routev5Submission));
+  app.post("/api/bill/20/push", route(routev5Push));
 
   if (app$argv.autopay) console.log("^ Auto Pay enabled");
   const port = app$argv.port || 3005;

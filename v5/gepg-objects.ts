@@ -40,6 +40,19 @@ export function BillSubmissionRequestAck(billSubReq: BillSubReq) {
     },
   };
 }
+export function BillPushRequestAck(billPushToPayReq: any) {
+  return {
+    Gepg: {
+      billPushToPayReqAck: {
+        AckId: "GW2021020513" + Math.random(),
+        ReqId: billPushToPayReq.ReqId,
+        StsCode: 7101,
+        StsDesc: "Successful",
+      },
+      gepgSignature: "-",
+    },
+  };
+}
 export interface TmpPayment {
   control_number: string;
   receipt: string;
@@ -52,6 +65,7 @@ export interface Envelop {
 
 export interface Gepg {
   billSubReq: BillSubReq;
+  billPushToPayReq?: any;
   signature: string;
 }
 

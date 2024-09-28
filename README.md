@@ -22,6 +22,7 @@ gepgfun control_number bill
 $ Control Request Endpoint v4= http://localhost:3000/api/bill/sigqrequest 
 
 $ Control Request Endpoint v5= http://localhost:3000/api/bill/20/submission 
+$ Push Endpoint v5= http://localhost:3000/api/bill/20/push
 
 ```
 ```

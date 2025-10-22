@@ -1,51 +1,32 @@
-# gepgfun v4 & v5
-
-```
-# Start a http server
+# gepgfun - Gepg emulator, for testing gepg payment/ bill cancellation and control number generating
+supports some of v4 & v5 endpoints
+- [Github](https://www.npmjs.com/package/gepgfun)
+## Start a http server
+```bash
 gepgfun serve
+```
 
-# Start a http server with autopay
+## Start a http server with autopay
+```bash
 gepgfun serve --autopay
-
-
-# make a payment request
-gepgfun payment bill:control_number:amount:currency
-
-
-# generate control number
-gepgfun control_number bill
-
+```
 
 ### configuration
-```
 
-$ Control Request Endpoint v4= http://localhost:3000/api/bill/sigqrequest 
-
-$ Control Request Endpoint v5= http://localhost:3000/api/bill/20/submission 
-$ Push Endpoint v5= http://localhost:3000/api/bill/20/push
-
-```
-```
-$ gepgfun serve --port=3000
-```
+- Control Request Endpoint v4= http://localhost:3000/api/bill/sigqrequest 
+- Control Request Endpoint v5= http://localhost:3000/api/bill/20/submission 
+- Push Endpoint v5= http://localhost:3000/api/bill/20/push
 
 ### arguments
 
-```
+```bash
 $ gepgfun serve --port=3000
 
-$ gepgfun control_number 1231 --callback=http://localhost/api/v1/receive-control-number #removed
-
-$ gepgfun payment 1231:99324342342:1500:TZS --callback=http://localhost/api/v1/receive-payment #removed
-
 ```
 
-### alternative .env
-
-```
-
+### callback configuration 
+- .env
+```bash
 URL_CONTROL_NUMBER_CALLBACK=http://localhost/api/v1/billing/receive-control-number
 URL_PAYMENT_CALLBACK=http://localhost/api/v1/billing/receive-payment
-
-
 ```

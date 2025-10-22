@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 import server from "./server";
-//import makePayment from "./utils/make.payment";
-//import makeControlNumber from "./utils/make.controlnumber";
 import dotenv from "dotenv";
 import minimist, { ParsedArgs } from "minimist";
 import { segfalt } from "./lib/utils";
@@ -16,31 +14,9 @@ const param = app$argv._[1];
 if (app$argv.autoPay != undefined) throw "autoPay is not an option.";
 if (action == "serve") {
   server(app$argv);
-} else if (action == "payment") {
-  if (!param) {
-    segfalt(-1, "Invalid bill information bill:control_number:amount:currency");
-  }
-  const params: string[] = param.split(":");
-  if (params.length != 4) {
-    segfalt(-1, "Invalid bill information bill:control_number:amount:currency");
-  }
-
-  //makePayment(app$argv, params[0], params[1], params[2], params[3]);
-} else if (action == "control_number") {
-  let _param = param + "";
-  if (!_param) {
-    segfalt(-1, "Invalid bill information arg - bill");
-  }
-  const params: string[] = _param.split(":");
-  if (params.length != 1) {
-    segfalt(-1, "Invalid bill information arg - bill");
-  }
-  //makeControlNumber(app$argv, params[0], undefined);
 } else {
   console.log(`
 Commands:\n
-- server - start gepg server\n
-- payment bill:control_number:amount:currency - make payment\n
-- control_number bill - generate control number\n
+- server - start gepg server (v4 & v5)\n
 `);
 }

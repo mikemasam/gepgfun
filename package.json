@@ -1,6 +1,6 @@
 {
   "name": "gepgfun",
-  "version": "0.0.123",
+  "version": "0.0.2",
   "description": "Gepg emulator, for testing gepg payment/ bill cancellation and control number generating.",
   "main": "dist/index.js",
   "scripts": {
